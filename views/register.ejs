@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register | Villa Court</title>
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="auth">
+  <div class="split">
+    <div class="side" style="background-image: url('/apartment.jpg')">
+      <div class="caption">
+        <img src="/logo.svg" alt="Villa Court logo">
+        <h2>Villa Court</h2>
+        <p>Visitor Management System</p>
+      </div>
+    </div>
+    <div class="formside">
+      <div class="card">
+        <h2>Create account</h2>
+        <% if (error) { %><p class="error"><%= error %></p><% } %>
+        <form method="POST" action="/register">
+          <input name="name" placeholder="Full name" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="password" name="password" placeholder="Password (6+ characters)" required>
+          <button>Create account</button>
+        </form>
+        <p>Have an account? <a href="/login">Login</a> · <a href="/">Home</a></p>
+      </div>
+    </div>
+  </div>
+</body></html>

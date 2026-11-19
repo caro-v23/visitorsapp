@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html><head><title>Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="wide">
+  <div class="top"><h2>Welcome, <%= name %></h2><a href="/logout">Logout</a></div>
+
+  <h3>Check in a visitor</h3>
+  <form method="POST" action="/visitors">
+    <input name="full_name" placeholder="Full name" required>
+    <input name="id_number" placeholder="ID / passport number">
+    <input name="phone" placeholder="Phone number">
+
+    <input name="person_visited" placeholder="Person being visited" required>
+
+    <input name="purpose" placeholder="Purpose of visit">
+    <button>Check in</button>
+  </form>
+
+  <h3>Visitors (<%= visitors.length %>)</h3>
+  <div class="scroll">
+  <table>
+    <tr><th>Name</th><th>ID</th><th>Phone</th><th>Visiting</th><th>Purpose</th><th>In</th><th>Out</th><th>Actions</th></tr>
+    <% visitors.forEach(v => { %>
+      <tr>
+        <td><%= v.full_name %></td>
+        <td><%= v.id_number || '' %></td>
+        <td><%= v.phone || '' %></td>
+        <td><%= v.person_visited %></td>
+        <td><%= v.purpose || '' %></td>
+        <td><%= new Date(v.time_in).toLocaleString() %></td>
+        <td><%= v.time_out ? new Date(v.time_out).toLocaleString() : 'Still inside' %></td>
+        <td>
+          <% if (!v.time_out) { %>
+            <form method="POST" action="/visitors/<%= v.id %>/checkout" style="display:inline">
+              <button>Check out</button>
+            </form>
+          <% } %>
+          <a href="/visitors/<%= v.id %>/edit">Edit</a>
+          <form method="POST" action="/visitors/<%= v.id %>/delete" style="display:inline"
+                onsubmit="return confirm('Delete this visitor?')">
+            <button class="danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+  </div>
+
+  <h3>Feedback</h3>
+  <% if (sent) { %><p class="ok">Thank you for your feedback!</p><% } %>
+  <form method="POST" action="/feedback">
+    <textarea name="message" placeholder="Tell us what you think..." required></textarea>
+    <button>Send feedback</button>
+  </form>
+  <ul>
+    <% feedbacks.forEach(f => { %>
+      <li><%= f.message %> <small>(<%= new Date(f.created_at).toLocaleDateString() %>)</small></li>
+    <% }) %>
+  </ul>
+</div></body></html>

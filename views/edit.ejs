@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html><head><title>Edit visitor</title>
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="stylesheet" href="/style.css"></head>
+<body><div class="card">
+  <h2>Edit visitor</h2>
+  <form method="POST" action="/visitors/<%= visitor.id %>/edit">
+    <input name="full_name" value="<%= visitor.full_name %>" required>
+    <input name="id_number" value="<%= visitor.id_number || '' %>">
+    <input name="phone" value="<%= visitor.phone || '' %>">
+    <input name="person_visited" value="<%= visitor.person_visited %>" required>
+    <input name="purpose" value="<%= visitor.purpose || '' %>">
+    <button>Save</button>
+  </form>
+  <a href="/dashboard">Cancel</a>
+</div></body></html>
