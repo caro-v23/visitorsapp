@@ -14,7 +14,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: new MySQLStore(db.config),
+   store: new MySQLStore({}, db),
   cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
 
