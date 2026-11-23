@@ -36,7 +36,11 @@ router.post('/login', async (req, res) => {
     const user = rows[0];
     if (!user || !(await bcrypt.compare(req.body.password, user.password)))
       return res.render('login', { error: 'Invalid email or password' });
-    req.session.userId = user.id;
+
+    re    req.session.userId = user.id;
+    req.session.name = user.name;
+    await db.query('INSERT INTO login_history (user_id) VALUES (?)', [user.id]);
+    res.redirect('/dashboard');q.session.userId = user.id;
     req.session.name = user.name;
     res.redirect('/dashboard');
   } catch (e) {
